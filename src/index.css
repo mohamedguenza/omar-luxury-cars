@@ -4,8 +4,27 @@
 @theme {
   --font-sans: "Poppins", "Cairo", ui-sans-serif, system-ui, sans-serif;
   --font-serif: "Playfair Display", "Cairo", ui-serif, Georgia, serif;
+  --color-amber-400: #f3e0a9;
+  --color-amber-500: #c9a84c;
 }
 
 html {
   scroll-behavior: smooth;
 }
+
+@layer utilities {
+  .bg-gold-gradient {
+    background: linear-gradient(135deg, #f3e0a9 0%, #c9a84c 35%, #9b7b2e 100%);
+  }
+  .hover\:bg-gold-gradient-light:hover {
+    background: linear-gradient(135deg, #fdf1cd 0%, #d4b55b 35%, #ac8a34 100%);
+  }
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+}
+

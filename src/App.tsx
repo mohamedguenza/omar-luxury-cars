@@ -1,14 +1,30 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Globe, Menu, X, ArrowRight, ShieldCheck, Gem, Clock, MapPin, Phone, Mail, Car, MessageCircle, CalendarDays, CalendarRange, Calendar, Settings2 } from 'lucide-react';
+import { Globe, Menu, X, ArrowRight, ShieldCheck, Gem, Clock, MapPin, Phone, Mail, Car, MessageCircle, CalendarDays, CalendarRange, Calendar, Settings2, Search } from 'lucide-react';
 import { translations, Language } from './translations';
 
 export default function App() {
   const [lang, setLang] = useState<Language>('fr');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedCar, setSelectedCar] = useState<{name: string, price: string, image: string} | null>(null);
-  const [bookingDays, setBookingDays] = useState<number>(1);
+  
+  const defaultToday = new Date().toISOString().split('T')[0];
+  const defaultTomorrow = new Date(Date.now() + 86400000).toISOString().split('T')[0];
+  const [fromDate, setFromDate] = useState<string>('');
+  const [toDate, setToDate] = useState<string>('');
+
+  const computedDays = useMemo(() => {
+    if (!fromDate || !toDate) return 0;
+    const start = new Date(fromDate);
+    const end = new Date(toDate);
+    const diff = Math.ceil((end.getTime() - start.getTime()) / (1000 * 60 * 60 * 24));
+    return diff > 0 ? diff : 1;
+  }, [fromDate, toDate]);
+
   const [activeCategory, setActiveCategory] = useState<string>('all');
+  const [currentView, setCurrentView] = useState<'home' | 'catalog'>('home');
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedBrand, setSelectedBrand] = useState<string>('all');
   const t = translations[lang];
 
   useEffect(() => {
@@ -21,25 +37,25 @@ export default function App() {
   };
 
   const navLinks = [
-    { name: t.navHome, href: "#home" },
-    { name: t.navAllCars, href: "#all-cars" },
-    { name: t.navServices, href: "#services" },
-    { name: t.navContact, href: "#contact" },
+    { name: t.navHome, href: "#home", onClick: () => { setCurrentView('home'); setIsMenuOpen(false); } },
+    { name: t.navAllCars, href: currentView === 'home' ? "#all-cars" : "#", onClick: () => { setCurrentView('catalog'); setIsMenuOpen(false); window.scrollTo(0,0); } },
+    { name: t.navServices, href: "#services", onClick: () => { setCurrentView('home'); setIsMenuOpen(false); } },
+    { name: t.navContact, href: "#contact", onClick: () => { setCurrentView('home'); setIsMenuOpen(false); } },
   ];
 
+  const defaultCarImage = "https://images.unsplash.com/photo-1606664824334-fcba8f19dafe?auto=format&fit=crop&q=80&w=800";
   const allCarsList = [
-    { name: t.car1Name, price: "1500", category: "premium", image: "https://images.unsplash.com/photo-1631269411306-6bd28eb079c6?auto=format&fit=crop&q=80&w=800" },
-    { name: t.car2Name, price: "1200", category: "premium", image: "https://images.unsplash.com/photo-1520031441872-265e4ff70366?auto=format&fit=crop&q=80&w=800" },
-    { name: t.car3Name, price: "2000", category: "premium", image: "https://images.unsplash.com/photo-1544636331-e26879ce2e6e?auto=format&fit=crop&q=80&w=800" },
-    { name: t.car4Name, price: "1100", category: "premium", image: "https://images.unsplash.com/photo-1549399542-7e3f8b79c341?auto=format&fit=crop&q=80&w=800" },
-    { name: "Porsche 911 GT3", price: "1800", category: "premium", image: "https://images.unsplash.com/photo-1503376713214-e0e640b615da?auto=format&fit=crop&q=80&w=800" },
-    { name: "Audi RS Q8", price: "950", category: "standard", image: "https://images.unsplash.com/photo-1606152421802-db97517c5b6b?auto=format&fit=crop&q=80&w=800" },
-    { name: "Range Rover SV", price: "1000", category: "premium", image: "https://images.unsplash.com/photo-1629897048514-3dd7414df75a?auto=format&fit=crop&q=80&w=800" },
-    { name: "BMW 4 Series Gran Coupe", price: "350", category: "standard", image: "https://images.unsplash.com/photo-1555215695-3004980ad54e?auto=format&fit=crop&q=80&w=800" },
-    { name: "VW Golf R", price: "250", category: "compact", image: "https://images.unsplash.com/photo-1541899481282-d53bffe3c35d?auto=format&fit=crop&q=80&w=800" },
-    { name: "Renault Clio", price: "80", category: "economy", image: "https://images.unsplash.com/photo-1619682817481-e994891cd1f5?auto=format&fit=crop&q=80&w=800" },
-    { name: "Peugeot 208", price: "85", category: "economy", image: "https://images.unsplash.com/photo-1603584173870-7f23fdae1b7a?auto=format&fit=crop&q=80&w=800" },
-    { name: "Mercedes A-Class", price: "180", category: "compact", image: "https://images.unsplash.com/photo-1618843479313-40f8afb4b4d8?auto=format&fit=crop&q=80&w=800" },
+    { name: "VW Touareg", price: "900", category: "premium", image: "/touareg-v.webp" },
+    { name: "Mercedes E 220", price: "800", category: "premium", image: "/E-220.webp" },
+    { name: "Range Rover Sport", price: "1200", category: "premium", image: "/range-rover-sport.webp" },
+    { name: t.car4Name, price: "1100", category: "premium", image: defaultCarImage },
+    { name: "Porsche 911 GT3", price: "1800", category: "premium", image: defaultCarImage },
+    { name: "Audi RS Q8", price: "950", category: "standard", image: defaultCarImage },
+    { name: "BMW 4 Series Gran Coupe", price: "350", category: "standard", image: defaultCarImage },
+    { name: "VW Golf R", price: "250", category: "compact", image: defaultCarImage },
+    { name: "Renault Clio", price: "80", category: "economy", image: defaultCarImage },
+    { name: "Peugeot 208", price: "85", category: "economy", image: defaultCarImage },
+    { name: "Mercedes A-Class", price: "180", category: "compact", image: defaultCarImage },
   ];
 
   const categories = [
@@ -54,12 +70,24 @@ export default function App() {
     ? allCarsList 
     : allCarsList.filter(car => car.category === activeCategory);
 
+  const catalogCars = useMemo(() => {
+    return allCarsList.filter(car => {
+      const matchSearch = car.name.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchBrand = selectedBrand === 'all' || car.name.split(' ')[0] === selectedBrand;
+      return matchSearch && matchBrand;
+    });
+  }, [searchQuery, selectedBrand]);
+
+  const brands = useMemo(() => {
+    return Array.from(new Set(allCarsList.map(c => c.name.split(' ')[0])));
+  }, []);
+
   return (
     <div className="min-h-screen bg-zinc-950 text-zinc-50 font-sans selection:bg-amber-500/30 selection:text-amber-200">
       {/* Navbar */}
       <nav className="fixed w-full z-50 bg-zinc-950/80 backdrop-blur-md border-b border-zinc-500/10 transition-all duration-300">
         <div className="max-w-7xl mx-auto px-6 h-24 flex items-center justify-between">
-          <a href="#home" className="flex items-center gap-3 group">
+          <a href="#home" onClick={() => setCurrentView('home')} className="flex items-center gap-3 group">
             <div className="relative flex items-center justify-center w-10 h-10 border border-amber-500/30 rotate-45 group-hover:rotate-90 transition-all duration-700 ease-out">
               <div className="absolute inset-1 border border-amber-500/20" />
               <span className="font-serif text-amber-500 -rotate-45 group-hover:-rotate-90 transition-all duration-700 ease-out text-xl">O</span>
@@ -77,6 +105,7 @@ export default function App() {
                 <li key={idx}>
                   <a 
                     href={link.href} 
+                    onClick={link.onClick}
                     className="text-sm uppercase tracking-widest text-zinc-400 hover:text-amber-500 transition-colors"
                   >
                     {link.name}
@@ -85,15 +114,6 @@ export default function App() {
               ))}
             </ul>
             <div className="flex items-center gap-6">
-              <a 
-                href="https://wa.me/212636503982" 
-                target="_blank" 
-                rel="noreferrer"
-                className="text-[#25D366] hover:text-[#20bd5a] transition-colors"
-                title="WhatsApp"
-              >
-                <MessageCircle className="w-5 h-5" />
-              </a>
               <button 
                 onClick={toggleLang}
                 className="flex items-center gap-2 text-sm uppercase tracking-widest hover:text-amber-500 transition-colors"
@@ -106,14 +126,6 @@ export default function App() {
 
           {/* Mobile Menu Toggle */}
           <div className="flex items-center gap-4 lg:hidden">
-            <a 
-              href="https://wa.me/212636503982" 
-              target="_blank" 
-              rel="noreferrer"
-              className="text-[#25D366] hover:text-[#20bd5a] transition-colors"
-            >
-              <MessageCircle className="w-5 h-5" />
-            </a>
             <button 
               className="p-2 text-zinc-400 hover:text-white"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
@@ -135,7 +147,7 @@ export default function App() {
               <a 
                 key={idx}
                 href={link.href} 
-                onClick={() => setIsMenuOpen(false)}
+                onClick={link.onClick}
                 className="text-sm uppercase tracking-widest text-zinc-300 hover:text-amber-500 transition-colors"
               >
                 {link.name}
@@ -152,8 +164,10 @@ export default function App() {
         )}
       </nav>
 
-      {/* Hero Section */}
-      <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
+      {currentView === 'home' ? (
+        <>
+          {/* Hero Section */}
+          <section id="home" className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0 z-0 bg-zinc-950">
           <img 
             src="https://upload.wikimedia.org/wikipedia/commons/0/0f/Mercedes-AMG_S_63_%28W223%29_IMG_8215.jpg" 
@@ -186,9 +200,12 @@ export default function App() {
             transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
             className="flex flex-col sm:flex-row items-center justify-center gap-6"
           >
-            <a href="#all-cars" className="bg-amber-500 text-zinc-950 px-8 py-4 uppercase tracking-[0.2em] text-sm font-semibold hover:bg-amber-400 transition-colors w-full sm:w-auto">
+            <button
+              onClick={() => setCurrentView('catalog')}
+              className="bg-gold-gradient border-none text-zinc-950 px-8 py-4 uppercase tracking-[0.2em] text-sm font-semibold hover:bg-gold-gradient-light transition-colors w-full sm:w-auto"
+            >
               {t.navAllCars}
-            </a>
+            </button>
             <a href="#contact" className="border border-zinc-700 px-8 py-4 uppercase tracking-[0.2em] text-sm hover:border-amber-500 hover:text-amber-500 transition-colors w-full sm:w-auto">
               {t.bookNow}
             </a>
@@ -212,7 +229,7 @@ export default function App() {
                 onClick={() => setActiveCategory(category.id)}
                 className={`px-6 py-2 rounded-full border text-sm tracking-widest uppercase transition-all duration-300 ${
                   activeCategory === category.id
-                    ? 'border-amber-500 bg-amber-500 text-zinc-950 font-semibold'
+                    ? 'border-transparent bg-gold-gradient text-zinc-950 font-semibold'
                     : 'border-zinc-800 text-zinc-400 hover:border-amber-500 hover:text-amber-500'
                 }`}
               >
@@ -223,7 +240,7 @@ export default function App() {
 
           <motion.div layout className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
             <AnimatePresence>
-              {filteredCars.map((car, idx) => (
+              {filteredCars.slice(0, 6).map((car, idx) => (
                 <motion.div 
                   layout
                   initial={{ opacity: 0, scale: 0.9 }}
@@ -231,7 +248,7 @@ export default function App() {
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.3 }}
                   key={car.name} 
-                  className="group relative overflow-hidden bg-zinc-950 aspect-[4/3] rounded-xl cursor-pointer border border-zinc-800 hover:border-amber-500/50 transition-colors"
+                  className="group relative overflow-hidden bg-zinc-950 aspect-[4/5] sm:aspect-[4/3] rounded-xl cursor-pointer border border-zinc-800 hover:border-amber-500/50 transition-colors"
                 >
                   <img 
                     src={car.image} 
@@ -248,8 +265,8 @@ export default function App() {
                         <span className="text-xs">{t.priceSuffix}</span>
                       </p>
                       <button 
-                        onClick={() => { setSelectedCar(car); setBookingDays(1); }}
-                        className="text-xs tracking-widest uppercase bg-amber-500 text-zinc-950 px-4 py-2 hover:bg-amber-400 transition-colors font-semibold cursor-pointer"
+                        onClick={() => { setSelectedCar(car); setFromDate(''); setToDate(''); }}
+                        className="text-xs tracking-widest uppercase bg-gold-gradient border-none text-zinc-950 px-4 py-2 hover:bg-gold-gradient-light transition-colors font-semibold cursor-pointer"
                       >
                         {t.bookNow}
                       </button>
@@ -259,6 +276,19 @@ export default function App() {
               ))}
             </AnimatePresence>
           </motion.div>
+
+          <div className="mt-16 flex justify-center">
+            <button
+              onClick={() => {
+                setCurrentView('catalog');
+                window.scrollTo(0, 0);
+              }}
+              className="group flex items-center gap-3 bg-zinc-900 border border-zinc-800 hover:border-amber-500 text-white px-8 py-4 rounded-xl transition-all duration-300"
+            >
+              <span className="uppercase tracking-[0.2em] text-sm">{t.viewFullCatalog}</span>
+              <ArrowRight className="w-5 h-5 group-hover:translate-x-1 group-hover:text-amber-500 transition-transform" />
+            </button>
+          </div>
         </div>
       </section>
 
@@ -355,6 +385,102 @@ export default function App() {
           </div>
         </div>
       </section>
+        </>
+      ) : (
+        <div className="pt-32 pb-24 min-h-screen relative z-10 bg-zinc-950 text-white">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="text-center mb-16">
+              <h1 className="text-4xl md:text-6xl font-serif mb-6">{t.ourCatalog}</h1>
+              <p className="text-zinc-400 font-light text-lg max-w-2xl mx-auto">{t.allCarsDesc}</p>
+            </div>
+
+            <div className="flex flex-col md:flex-row gap-6 mb-12 items-center justify-between bg-zinc-900/50 p-6 rounded-2xl border border-zinc-800">
+              <div className="w-full md:w-1/2 relative">
+                <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500" />
+                <input 
+                  type="text" 
+                  placeholder={t.searchCar}
+                  value={searchQuery}
+                  onChange={e => setSearchQuery(e.target.value)}
+                  className="w-full bg-zinc-950/50 border border-zinc-800 rounded-xl pl-12 pr-4 py-3 focus:outline-none focus:border-amber-500 transition-colors"
+                />
+              </div>
+
+              <div className="w-full md:w-auto flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
+                <button
+                  onClick={() => setSelectedBrand('all')}
+                  className={`shrink-0 px-6 py-2 rounded-full border text-sm tracking-widest uppercase transition-all duration-300 ${
+                    selectedBrand === 'all'
+                      ? 'border-transparent bg-gold-gradient text-zinc-950 font-semibold'
+                      : 'border-zinc-800 text-zinc-400 hover:border-amber-500 hover:text-amber-500'
+                  }`}
+                >
+                  {t.allBrands}
+                </button>
+                {brands.map(brand => (
+                  <button
+                    key={brand}
+                    onClick={() => setSelectedBrand(brand)}
+                    className={`shrink-0 px-6 py-2 rounded-full border text-sm tracking-widest uppercase transition-all duration-300 ${
+                      selectedBrand === brand
+                        ? 'border-transparent bg-gold-gradient text-zinc-950 font-semibold'
+                        : 'border-zinc-800 text-zinc-400 hover:border-amber-500 hover:text-amber-500'
+                    }`}
+                  >
+                    {brand}
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {catalogCars.length > 0 ? (
+              <motion.div layout className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                <AnimatePresence>
+                  {catalogCars.map(car => (
+                    <motion.div 
+                      layout
+                      initial={{ opacity: 0, scale: 0.9 }}
+                      animate={{ opacity: 1, scale: 1 }}
+                      exit={{ opacity: 0, scale: 0.9 }}
+                      transition={{ duration: 0.3 }}
+                      key={car.name} 
+                      className="group relative overflow-hidden bg-zinc-900 aspect-[4/5] sm:aspect-[4/3] rounded-xl cursor-pointer border border-zinc-800 hover:border-amber-500/50 transition-colors"
+                    >
+                      <img 
+                        src={car.image} 
+                        alt={car.name} 
+                        className="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent opacity-90" />
+                      <div className="absolute bottom-0 inset-x-0 p-6 flex flex-col items-start transition-transform duration-500">
+                        <h3 className="text-xl font-serif mb-2">{car.name}</h3>
+                        <div className="flex justify-between w-full items-center">
+                          <p className="text-zinc-300 font-light flex items-center gap-1">
+                            <span className="text-xs">{t.pricePrefix}</span>
+                            <span className="text-amber-500 text-lg font-medium">{car.price}</span>
+                            <span className="text-xs">{t.priceSuffix}</span>
+                          </p>
+                          <button 
+                            onClick={() => { setSelectedCar(car); setFromDate(''); setToDate(''); }}
+                            className="text-xs tracking-widest uppercase bg-gold-gradient border-none text-zinc-950 px-4 py-2 hover:bg-gold-gradient-light transition-colors font-semibold cursor-pointer rounded"
+                          >
+                            {t.bookNow}
+                          </button>
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </AnimatePresence>
+              </motion.div>
+            ) : (
+              <div className="text-center py-20 text-zinc-500">
+                <Car className="w-16 h-16 mx-auto mb-4 opacity-50" />
+                <p className="text-xl">{t.noCarsFound}</p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Footer */}
       <footer className="bg-zinc-900 py-16 border-t border-zinc-800 text-center md:text-start">
@@ -402,7 +528,7 @@ export default function App() {
                 <div className="absolute inset-0 bg-gradient-to-t from-zinc-900 to-transparent" />
                 <button 
                   onClick={() => setSelectedCar(null)}
-                  className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-zinc-950/50 text-white hover:bg-amber-500 transition-colors backdrop-blur-md"
+                  className="absolute top-4 right-4 w-8 h-8 flex items-center justify-center rounded-full bg-zinc-950/50 text-white hover:bg-gold-gradient-light hover:text-zinc-950 transition-colors backdrop-blur-md"
                 >
                   <X className="w-5 h-5" />
                 </button>
@@ -410,28 +536,53 @@ export default function App() {
               
               <div className="p-6">
                 <h3 className="text-2xl font-serif mb-2">{selectedCar.name}</h3>
-                <p className="text-amber-500 font-medium mb-6">
-                  {t.pricePrefix} {selectedCar.price} {t.priceSuffix}
+                <p className="text-amber-500 font-medium mb-6 flex items-center justify-between">
+                  <span>{t.pricePrefix} {selectedCar.price} {t.priceSuffix}</span>
+                  <span className="text-sm text-zinc-400 bg-zinc-900 px-3 py-1 rounded-full text-center">
+                    {computedDays > 0 ? `${computedDays} jour(s)` : 'Sélectionnez les dates'}
+                  </span>
                 </p>
                 
-                <div className="mb-6">
-                  <label htmlFor="bookingDays" className="block text-sm text-zinc-400 mb-2">{t.numberOfDays}</label>
-                  <input
-                    type="number"
-                    id="bookingDays"
-                    min="1"
-                    value={bookingDays}
-                    onChange={(e) => setBookingDays(Math.max(1, parseInt(e.target.value) || 1))}
-                    className="w-full bg-zinc-950/50 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors"
-                  />
+                <div className="mb-6 grid grid-cols-2 gap-4">
+                  <div>
+                    <label htmlFor="fromDate" className="block text-sm text-zinc-400 mb-2">{t.fromDate}</label>
+                    <input
+                      type="date"
+                      id="fromDate"
+                      min={defaultToday}
+                      value={fromDate}
+                      onChange={(e) => setFromDate(e.target.value)}
+                      className="w-full bg-zinc-950/50 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors [&::-webkit-calendar-picker-indicator]:invert"
+                    />
+                  </div>
+                  <div>
+                    <label htmlFor="toDate" className="block text-sm text-zinc-400 mb-2">{t.toDate}</label>
+                    <input
+                      type="date"
+                      id="toDate"
+                      min={fromDate || defaultToday}
+                      value={toDate}
+                      onChange={(e) => setToDate(e.target.value)}
+                      className="w-full bg-zinc-950/50 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors [&::-webkit-calendar-picker-indicator]:invert"
+                    />
+                  </div>
                 </div>
 
                 <div className="flex flex-col gap-3">
                   <a 
-                    href={`https://wa.me/212636503982?text=${encodeURIComponent(`Bonjour, je suis intéressé par la location de la ${selectedCar.name} pour ${bookingDays} jour(s).`)}`}
-                    target="_blank" 
+                    href={fromDate && toDate ? `https://wa.me/212636503982?text=${encodeURIComponent(`Bonjour, je suis intéressé par la location de la ${selectedCar.name} du ${fromDate} au ${toDate} (${computedDays} jour(s)).`)}` : '#'}
+                    target={fromDate && toDate ? "_blank" : undefined}
                     rel="noreferrer"
-                    className="w-full flex items-center justify-center gap-2 bg-[#25D366] text-white py-4 rounded-xl font-semibold hover:bg-[#20bd5a] transition-colors"
+                    onClick={(e) => {
+                      if (!fromDate || !toDate) {
+                        e.preventDefault();
+                      }
+                    }}
+                    className={`w-full flex items-center justify-center gap-2 text-white py-4 rounded-xl font-semibold transition-all ${
+                      fromDate && toDate 
+                        ? 'bg-[#25D366] hover:bg-[#20bd5a]' 
+                        : 'bg-zinc-800 text-zinc-500 cursor-not-allowed opacity-70'
+                    }`}
                   >
                     <MessageCircle className="w-5 h-5" />
                     {t.bookOnWhatsapp}
@@ -449,6 +600,19 @@ export default function App() {
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* Fixed WhatsApp Button */}
+      <a 
+        href="https://wa.me/212636503982"
+        target="_blank"
+        rel="noreferrer"
+        className="fixed bottom-6 right-6 z-[90] flex items-center justify-center w-14 h-14 bg-[#25D366] text-white rounded-full shadow-2xl hover:bg-[#20bd5a] hover:scale-110 transition-all duration-300"
+        title="WhatsApp"
+      >
+        <svg viewBox="0 0 24 24" className="w-8 h-8 fill-current" xmlns="http://www.w3.org/2000/svg">
+          <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/>
+        </svg>
+      </a>
     </div>
   );
 }
