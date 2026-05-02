@@ -97,10 +97,10 @@ export default function App() {
           <a href="#home" onClick={() => setCurrentView('home')} className="flex items-center gap-3 group">
             <div className="relative flex items-center justify-center w-10 h-10 border border-amber-500/30 rotate-45 group-hover:rotate-90 transition-all duration-700 ease-out">
               <div className="absolute inset-1 border border-amber-500/20" />
-              <span className="font-serif text-amber-500 -rotate-45 group-hover:-rotate-90 transition-all duration-700 ease-out text-xl">O</span>
+              <span className="font-serif text-amber-500 -rotate-45 group-hover:-rotate-90 transition-all duration-700 ease-out text-xl">B</span>
             </div>
             <div className="flex flex-col items-start rtl:items-end">
-              <span className="text-2xl font-serif tracking-[0.2em] bg-gradient-to-r from-amber-100 via-amber-300 to-amber-600 bg-clip-text text-transparent">OMAR</span>
+              <span className="text-2xl font-serif tracking-[0.2em] bg-gradient-to-r from-amber-100 via-amber-300 to-amber-600 bg-clip-text text-transparent">BOUDADEN</span>
               <span className="text-[0.55rem] tracking-[0.4em] text-zinc-400 uppercase">Luxury Cars</span>
             </div>
           </a>
@@ -384,7 +384,7 @@ export default function App() {
                 </div>
                 <div>
                   <p className="text-sm text-zinc-500 uppercase tracking-widest">{t.whatsapp || 'WhatsApp'}</p>
-                  <a href="https://wa.me/212636503982" target="_blank" rel="noreferrer" className="font-serif text-xl mt-1 block hover:text-[#25D366] transition-colors" dir="ltr">+212 636 503 982</a>
+                  <a href="https://wa.me/212622065312" target="_blank" rel="noreferrer" className="font-serif text-xl mt-1 block hover:text-[#25D366] transition-colors" dir="ltr">+212 622 065 312</a>
                 </div>
               </div>
               <div className="flex items-center gap-6">
@@ -393,7 +393,7 @@ export default function App() {
                 </div>
                 <div>
                   <p className="text-sm text-zinc-500 uppercase tracking-widest">{t.phone}</p>
-                  <a href="tel:+212636503982" className="font-serif text-xl mt-1 block hover:text-amber-500 transition-colors" dir="ltr">+212 636 503 982</a>
+                  <a href="tel:+212622065312" className="font-serif text-xl mt-1 block hover:text-amber-500 transition-colors" dir="ltr">+212 622 065 312</a>
                 </div>
               </div>
               <div className="flex items-center gap-6">
@@ -402,7 +402,7 @@ export default function App() {
                 </div>
                 <div>
                   <p className="text-sm text-zinc-500 uppercase tracking-widest">{t.email}</p>
-                  <a href="mailto:booking@omarcars.com" className="font-serif text-xl mt-1 block hover:text-amber-500 transition-colors">booking@omarcars.com</a>
+                  <a href="mailto:booking@boudadencars.com" className="font-serif text-xl mt-1 block hover:text-amber-500 transition-colors">booking@boudadencars.com</a>
                 </div>
               </div>
               <div className="flex items-center gap-6">
@@ -546,21 +546,6 @@ export default function App() {
                       <div className="p-6 md:p-8 flex-1 flex flex-col justify-between border-t border-[#2a2a26]">
                         <div>
                           <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">{car.name}</h3>
-                          
-                          <div className="flex gap-5 text-zinc-400 mb-6">
-                            <div className="flex items-center gap-2 text-xs font-medium">
-                              <Users className="w-4 h-4 text-zinc-500" />
-                              <span>5 {t.places}</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-xs font-medium">
-                              <Fuel className="w-4 h-4 text-zinc-500" />
-                              <span>{t.fuel}</span>
-                            </div>
-                            <div className="flex items-center gap-2 text-xs font-medium">
-                              <Settings2 className="w-4 h-4 text-zinc-500" />
-                              <span>{t.transmission}</span>
-                            </div>
-                          </div>
                         </div>
                         
                         <div className="flex items-end justify-between mt-4">
@@ -569,14 +554,13 @@ export default function App() {
                               <span className="text-3xl font-bold text-[#d4af37] leading-none">{car.price} {t.currency}</span>
                               <span className="text-xs text-zinc-500 font-medium">/jour</span>
                             </div>
-                            <div className="text-[11px] text-zinc-500 font-medium">{t.minDays}</div>
                           </div>
                           
                           <button 
                             onClick={() => { setSelectedCar(car); setFromDate(''); setToDate(''); }}
-                            className="text-sm font-bold text-white flex items-center gap-2 hover:text-[#d4af37] transition-colors"
+                            className="text-xs tracking-widest uppercase bg-gold-gradient border-none text-zinc-950 px-4 py-2 hover:bg-gold-gradient-light transition-colors font-semibold cursor-pointer rounded"
                           >
-                            {t.seeOptions}
+                            {t.bookNow}
                           </button>
                         </div>
                       </div>
@@ -601,10 +585,10 @@ export default function App() {
             <a href="#home" className="flex items-center justify-center md:justify-start gap-3 group mb-6 w-fit mx-auto md:mx-0">
               <div className="relative flex items-center justify-center w-10 h-10 border border-amber-500/30 rotate-45 transition-all duration-700 ease-out">
                 <div className="absolute inset-1 border border-amber-500/20" />
-                <span className="font-serif text-amber-500 -rotate-45 text-xl">O</span>
+                <span className="font-serif text-amber-500 -rotate-45 text-xl">B</span>
               </div>
               <div className="flex flex-col items-start rtl:items-end">
-                <span className="text-2xl font-serif tracking-[0.2em] bg-gradient-to-r from-amber-100 via-amber-300 to-amber-600 bg-clip-text text-transparent">OMAR</span>
+                <span className="text-2xl font-serif tracking-[0.2em] bg-gradient-to-r from-amber-100 via-amber-300 to-amber-600 bg-clip-text text-transparent">BOUDADEN</span>
                 <span className="text-[0.55rem] tracking-[0.4em] text-zinc-400 uppercase">Luxury Cars</span>
               </div>
             </a>
@@ -613,7 +597,7 @@ export default function App() {
             </p>
           </div>
           <div className="md:text-end text-zinc-500 text-sm font-light">
-            © {new Date().getFullYear()} OMAR Luxury Cars. {t.rights}
+            © {new Date().getFullYear()} Boudaden Luxury Cars. {t.rights}
           </div>
         </div>
       </footer>
@@ -682,7 +666,7 @@ export default function App() {
 
                 <div className="flex flex-col gap-3">
                   <a 
-                    href={fromDate && toDate ? `https://wa.me/212636503982?text=${encodeURIComponent(`Bonjour, je suis intéressé par la location de la ${selectedCar.name} du ${fromDate} au ${toDate} (${computedDays} jour(s)).`)}` : '#'}
+                    href={fromDate && toDate ? `https://wa.me/212622065312?text=${encodeURIComponent(`Bonjour, je suis intéressé par la location de la ${selectedCar.name} du ${fromDate} au ${toDate} (${computedDays} jour(s)).`)}` : '#'}
                     target={fromDate && toDate ? "_blank" : undefined}
                     rel="noreferrer"
                     onClick={(e) => {
@@ -715,7 +699,7 @@ export default function App() {
 
       {/* Fixed WhatsApp Button */}
       <a 
-        href="https://wa.me/212636503982"
+        href="https://wa.me/212622065312"
         target="_blank"
         rel="noreferrer"
         className="fixed bottom-6 right-6 z-[90] flex items-center justify-center w-14 h-14 bg-[#25D366] text-white rounded-full shadow-2xl hover:bg-[#20bd5a] hover:scale-110 transition-all duration-300"

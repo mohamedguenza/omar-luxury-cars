@@ -11,7 +11,7 @@ export const translations = {
     viewFleet: "Découvrir la Flotte",
     ourCollection: "Notre Collection",
     fleetHeading: "Véhicules de Prestige",
-    whyChooseUs: "Pourquoi OMAR ?",
+    whyChooseUs: "Pourquoi Boudaden ?",
     servicesHeading: "Nos Offres de Location",
     serviceDailyTitle: "Locations Journalières",
     serviceDailyDesc: "Profitez de nos véhicules de luxe pour vos déplacements courts ou soirées.",
@@ -82,7 +82,7 @@ export const translations = {
     step3Num: "03",
     step3Title: "Recevoir le véhicule",
     step3Desc: "Livraison à votre hôtel, à l’aéroport ou à l’adresse de votre choix. 7j/7.",
-    footerAbout: "OMAR Luxury Cars redéfinit l'expérience de location de véhicules haut de gamme.",
+    footerAbout: "Boudaden Luxury Cars redéfinit l'expérience de location de véhicules haut de gamme.",
     rights: "Tous droits réservés."
   },
   ar: {
@@ -97,7 +97,7 @@ export const translations = {
     viewFleet: "اكتشف الأسطول",
     ourCollection: "مجموعتنا",
     fleetHeading: "مركبات استثنائية",
-    whyChooseUs: "لماذا تختار عُمر؟",
+    whyChooseUs: "لماذا تختار بودادن؟",
     servicesHeading: "عروض التأجير الخاصة بنا",
     serviceDailyTitle: "إيجارات يومية",
     serviceDailyDesc: "استمتع بسياراتنا الفاخرة لتنقلاتك القصيرة أو مناسباتك.",
@@ -168,7 +168,7 @@ export const translations = {
     step3Num: "03",
     step3Title: "استلم السيارة",
     step3Desc: "توصيل إلى فندقك، المطار، أو أي عنوان تختاره. 7 أيام/أسبوع.",
-    footerAbout: "سيارات عُمر الفاخرة تعيد تعريف تجربة تأجير السيارات الراقية.",
+    footerAbout: "سيارات بودادن الفاخرة تعيد تعريف تجربة تأجير السيارات الراقية.",
     rights: "جميع الحقوق محفوظة."
   }
 };
