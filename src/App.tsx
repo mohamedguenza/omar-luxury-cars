@@ -213,6 +213,44 @@ export default function App() {
         </div>
       </section>
 
+      {/* How it works Section */}
+      <section className="py-24 bg-zinc-950 text-white">
+        <div className="max-w-7xl mx-auto px-6">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-4xl font-serif text-white">{t.stepsTitle}</h2>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-12 relative animate-in fade-in slide-in-from-bottom duration-1000">
+            {/* connecting line for desktop */}
+            <div className="hidden md:block absolute top-8 left-[16%] right-[16%] h-[1px] bg-zinc-800"></div>
+            
+            <div className="relative text-center">
+              <div className="w-16 h-16 mx-auto bg-zinc-900 border border-zinc-800 rounded-full flex items-center justify-center text-amber-500 font-serif text-xl mb-6 relative z-10">
+                {t.step1Num}
+              </div>
+              <h3 className="text-xl font-medium mb-4">{t.step1Title}</h3>
+              <p className="text-zinc-400 font-light leading-relaxed">{t.step1Desc}</p>
+            </div>
+            
+            <div className="relative text-center">
+              <div className="w-16 h-16 mx-auto bg-zinc-900 border border-amber-500/50 rounded-full flex items-center justify-center text-amber-500 font-serif text-xl mb-6 relative z-10 shadow-[0_0_15px_rgba(245,158,11,0.2)]">
+                {t.step2Num}
+              </div>
+              <h3 className="text-xl font-medium mb-4">{t.step2Title}</h3>
+              <p className="text-zinc-400 font-light leading-relaxed">{t.step2Desc}</p>
+            </div>
+            
+            <div className="relative text-center">
+              <div className="w-16 h-16 mx-auto bg-zinc-900 border border-zinc-800 rounded-full flex items-center justify-center text-amber-500 font-serif text-xl mb-6 relative z-10">
+                {t.step3Num}
+              </div>
+              <h3 className="text-xl font-medium mb-4">{t.step3Title}</h3>
+              <p className="text-zinc-400 font-light leading-relaxed">{t.step3Desc}</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* All Cars Section */}
       <section id="all-cars" className="py-32 bg-zinc-900 border-y border-zinc-800">
         <div className="max-w-7xl mx-auto px-6">
