@@ -47,7 +47,7 @@ export default function App() {
   const defaultCarImage = "https://images.unsplash.com/photo-1606664824334-fcba8f19dafe?auto=format&fit=crop&q=80&w=800";
   const allCarsList = [
     { name: "VW Touareg Extreme", price: "900", category: "premium", image: "/vw-touareg-extreme.png" },
-    { name: "Mercedes Classe E", price: "800", category: "premium", image: "/mercedesE.png" },
+    { name: "Mercedes E", price: "1800", category: "premium", image: "/mercedesE.png" },
     { name: "Mercedes Classe V", price: "1200", category: "premium", image: "/MercedesclasseV.png" },
     { name: "Golf 8 R", price: "900", category: "premium", image: "/golf8r.png" },
     { name: "Cupra Formentor", price: "800", category: "premium", image: "/cupra-formentor.png" },
