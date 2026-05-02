@@ -411,7 +411,7 @@ export default function App() {
                 </div>
                 <div>
                   <p className="text-sm text-zinc-500 uppercase tracking-widest">{t.location || 'Location'}</p>
-                  <p className="font-serif text-xl mt-1">{t.addressValue}</p>
+                  <a href="https://maps.app.goo.gl/CKccBDfxHDJs6kZ16" target="_blank" rel="noreferrer" className="font-serif text-xl mt-1 block hover:text-amber-500 transition-colors">{t.addressValue}</a>
                 </div>
               </div>
             </div>
@@ -419,7 +419,7 @@ export default function App() {
 
           <div className="bg-zinc-900 border border-zinc-800 p-2 rounded-2xl h-[400px] lg:h-auto min-h-[400px] relative overflow-hidden group">
             <iframe 
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2624.9914406081493!2d2.292292615674404!3d48.8583736086627!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47e66e2964e34e2d%3A0x8ddca9ee380ef7e0!2sEiffel%20Tower!5e0!3m2!1sen!2sfr!4v1689620000000!5m2!1sen!2sfr" 
+              src="https://maps.google.com/maps?q=Skhirate,+Morocco&t=&z=13&ie=UTF8&iwloc=&output=embed" 
               width="100%" 
               height="100%" 
               style={{ border: 0, filter: 'grayscale(1) invert(0.9) contrast(1.2)' }} 
