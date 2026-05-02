@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Globe, Menu, X, ArrowRight, ShieldCheck, Gem, Clock, MapPin, Phone, Mail, Car, MessageCircle, CalendarDays, CalendarRange, Calendar, Settings2, Search, Sparkles, Users, Fuel, ArrowUpDown } from 'lucide-react';
+import { Globe, Menu, X, ArrowRight, ShieldCheck, Gem, Clock, MapPin, Phone, Mail, Car, MessageCircle, CalendarDays, CalendarRange, Calendar, Settings2, Search, Sparkles, Users, Fuel, ArrowUpDown, Send, Star } from 'lucide-react';
 import { translations, Language } from './translations';
 
 export default function App() {
@@ -372,6 +372,84 @@ export default function App() {
         </div>
       </section>
 
+      {/* City/Stats Section */}
+      <section className="py-24 bg-zinc-950 border-t border-zinc-900 overflow-hidden relative">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full bg-amber-500/5 blur-[120px] rounded-full pointer-events-none" />
+        
+        <div className="max-w-7xl mx-auto px-6 text-center relative z-10">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="flex justify-center mb-8"
+          >
+            <span className="flex items-center gap-2 border border-amber-500/30 text-[#cbb26a] text-[10px] md:text-xs font-bold tracking-[0.15em] uppercase px-5 py-2 rounded-full bg-zinc-950/50 backdrop-blur-md">
+              <MapPin className="w-3.5 h-3.5" />
+              {t.statsSectionBadge}
+            </span>
+          </motion.div>
+          
+          <motion.h2 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.1 }}
+            className="text-3xl md:text-6xl lg:text-7xl font-bold text-white mb-8 tracking-tight leading-[1.1] max-w-4xl mx-auto"
+          >
+            {lang === 'fr' ? t.statsSectionTitle.split('Skhirate')[0] : t.statsSectionTitle.split('الصخيرات')[0]}
+            <span className="text-amber-500">
+              {lang === 'fr' ? 'Skhirate' : 'الصخيرات'}
+            </span>
+          </motion.h2>
+
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.8 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.2 }}
+            className="flex justify-center mb-12"
+          >
+            <div className="w-full max-w-md h-px bg-gradient-to-r from-transparent via-amber-500/30 to-transparent relative">
+              <Send className="w-4 h-4 text-amber-500 absolute -top-2 left-1/2 -translate-x-1/2 rotate-[-20deg]" />
+            </div>
+          </motion.div>
+
+          <motion.p 
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.3 }}
+            className="text-zinc-400 font-light text-lg md:text-xl max-w-2xl mx-auto mb-20 leading-relaxed"
+          >
+            {t.statsSectionDesc}
+          </motion.p>
+
+          <motion.div 
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: 0.4 }}
+            className="max-w-4xl mx-auto grid grid-cols-3 gap-0 border border-white/5 rounded-2xl md:rounded-3xl overflow-hidden bg-zinc-900/20 backdrop-blur-sm"
+          >
+            <div className="p-4 sm:p-10 border-r border-white/5 flex flex-col items-center justify-center group hover:bg-zinc-900 transition-all duration-500">
+              <span className="text-2xl sm:text-5xl font-black text-white mb-2 tracking-tighter group-hover:text-amber-500 transition-colors duration-500">{t.statsVehiclesValue}</span>
+              <span className="text-[7px] sm:text-[10px] md:text-xs tracking-[0.1em] sm:tracking-[0.2em] text-zinc-500 uppercase font-bold">{t.statsVehiclesLabel}</span>
+            </div>
+            <div className="p-4 sm:p-10 border-r border-white/5 flex flex-col items-center justify-center group hover:bg-zinc-900 transition-all duration-500">
+              <span className="text-2xl sm:text-5xl font-black text-white mb-2 tracking-tighter group-hover:text-amber-500 transition-colors duration-500">{t.statsClientsValue}</span>
+              <span className="text-[7px] sm:text-[10px] md:text-xs tracking-[0.1em] sm:tracking-[0.2em] text-zinc-500 uppercase font-bold text-center">{t.statsClientsLabel}</span>
+            </div>
+            <div className="p-4 sm:p-10 flex flex-col items-center justify-center group hover:bg-zinc-900 transition-all duration-500">
+              <div className="flex items-center gap-1 sm:gap-2 mb-2">
+                <span className="text-2xl sm:text-5xl font-black text-white tracking-tighter group-hover:text-amber-500 transition-colors duration-500">{t.statsGoogleValue}</span>
+                <Star className="w-3 h-3 sm:w-6 sm:h-6 text-amber-500 fill-amber-500 group-hover:rotate-12 transition-transform duration-500" />
+              </div>
+              <span className="text-[7px] sm:text-[10px] md:text-xs tracking-[0.1em] sm:tracking-[0.2em] text-zinc-500 uppercase font-bold text-center">{t.statsGoogleLabel}</span>
+            </div>
+          </motion.div>
+        </div>
+      </section>
+
       {/* Contact Section */}
       <section id="contact" className="py-32 bg-zinc-900 border-t border-zinc-800">
         <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20">
@@ -580,10 +658,10 @@ export default function App() {
       )}
 
       {/* Footer */}
-      <footer className="bg-zinc-900 py-16 border-t border-zinc-800 text-center md:text-start">
+      <footer className="bg-zinc-900 py-16 border-t border-zinc-800 text-start">
         <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <a href="#home" className="flex items-center justify-center md:justify-start gap-3 group mb-6 w-fit mx-auto md:mx-0">
+            <a href="#home" className="flex items-center gap-3 group mb-6 w-fit">
               <div className="relative flex items-center justify-center w-10 h-10 border border-amber-500/30 rotate-45 transition-all duration-700 ease-out">
                 <div className="absolute inset-1 border border-amber-500/20" />
                 <span className="font-serif text-amber-500 -rotate-45 text-xl">B</span>
