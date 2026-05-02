@@ -7,6 +7,7 @@ export default function App() {
   const [lang, setLang] = useState<Language>('fr');
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedCar, setSelectedCar] = useState<{name: string, price: string, image: string} | null>(null);
+  const [bookingDays, setBookingDays] = useState<number>(1);
   const [activeCategory, setActiveCategory] = useState<string>('all');
   const t = translations[lang];
 
@@ -247,7 +248,7 @@ export default function App() {
                         <span className="text-xs">{t.priceSuffix}</span>
                       </p>
                       <button 
-                        onClick={() => setSelectedCar(car)}
+                        onClick={() => { setSelectedCar(car); setBookingDays(1); }}
                         className="text-xs tracking-widest uppercase bg-amber-500 text-zinc-950 px-4 py-2 hover:bg-amber-400 transition-colors font-semibold cursor-pointer"
                       >
                         {t.bookNow}
@@ -333,7 +334,7 @@ export default function App() {
                 </div>
                 <div>
                   <p className="text-sm text-zinc-500 uppercase tracking-widest">{t.location || 'Location'}</p>
-                  <p className="font-serif text-xl mt-1">Paris • Dubai • Monaco</p>
+                  <p className="font-serif text-xl mt-1">{t.addressValue}</p>
                 </div>
               </div>
             </div>
@@ -413,9 +414,21 @@ export default function App() {
                   {t.pricePrefix} {selectedCar.price} {t.priceSuffix}
                 </p>
                 
+                <div className="mb-6">
+                  <label htmlFor="bookingDays" className="block text-sm text-zinc-400 mb-2">{t.numberOfDays}</label>
+                  <input
+                    type="number"
+                    id="bookingDays"
+                    min="1"
+                    value={bookingDays}
+                    onChange={(e) => setBookingDays(Math.max(1, parseInt(e.target.value) || 1))}
+                    className="w-full bg-zinc-950/50 border border-zinc-800 rounded-xl px-4 py-3 text-white focus:outline-none focus:border-amber-500 transition-colors"
+                  />
+                </div>
+
                 <div className="flex flex-col gap-3">
                   <a 
-                    href={`https://wa.me/212636503982?text=${encodeURIComponent(`Bonjour, je suis intéressé par la location de la ${selectedCar.name}. / Hello, I am interested in renting the ${selectedCar.name}.`)}`}
+                    href={`https://wa.me/212636503982?text=${encodeURIComponent(`Bonjour, je suis intéressé par la location de la ${selectedCar.name} pour ${bookingDays} jour(s).`)}`}
                     target="_blank" 
                     rel="noreferrer"
                     className="w-full flex items-center justify-center gap-2 bg-[#25D366] text-white py-4 rounded-xl font-semibold hover:bg-[#20bd5a] transition-colors"

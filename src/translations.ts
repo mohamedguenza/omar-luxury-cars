@@ -31,6 +31,7 @@ export const translations = {
     phone: "Téléphone",
     whatsapp: "WhatsApp",
     location: "Adresse",
+    addressValue: "Rabat, Maroc",
     message: "Votre message",
     send: "Envoyer",
     car1Name: "Rolls-Royce Phantom",
@@ -48,6 +49,7 @@ export const translations = {
     pricePrefix: "À partir de ",
     priceSuffix: "€ / jour",
     bookOnWhatsapp: "Réserver via WhatsApp",
+    numberOfDays: "Nombre de jours",
     closeModal: "Fermer",
     footerAbout: "OMAR Luxury Cars redéfinit l'expérience de location de véhicules haut de gamme.",
     rights: "Tous droits réservés."
@@ -84,6 +86,7 @@ export const translations = {
     phone: "الهاتف",
     whatsapp: "واتساب",
     location: "العنوان",
+    addressValue: "الرباط، المغرب",
     message: "رسالتك",
     send: "إرسال",
     car1Name: "رولز رويس فانتوم",
@@ -101,6 +104,7 @@ export const translations = {
     pricePrefix: "ابتداءً من ",
     priceSuffix: "€ / يوم",
     bookOnWhatsapp: "احجز عبر واتساب",
+    numberOfDays: "عدد الأيام",
     closeModal: "إغلاق",
     footerAbout: "سيارات عُمر الفاخرة تعيد تعريف تجربة تأجير السيارات الراقية.",
     rights: "جميع الحقوق محفوظة."
