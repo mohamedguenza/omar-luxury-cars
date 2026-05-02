@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Globe, Menu, X, ArrowRight, ShieldCheck, Gem, Clock, MapPin, Phone, Mail, Car, MessageCircle, CalendarDays, CalendarRange, Calendar, Settings2, Search } from 'lucide-react';
+import { Globe, Menu, X, ArrowRight, ShieldCheck, Gem, Clock, MapPin, Phone, Mail, Car, MessageCircle, CalendarDays, CalendarRange, Calendar, Settings2, Search, Sparkles, Users, Fuel, ArrowUpDown } from 'lucide-react';
 import { translations, Language } from './translations';
 
 export default function App() {
@@ -25,6 +25,7 @@ export default function App() {
   const [currentView, setCurrentView] = useState<'home' | 'catalog'>('home');
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedBrand, setSelectedBrand] = useState<string>('all');
+  const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('asc');
   const t = translations[lang];
 
   useEffect(() => {
@@ -71,12 +72,18 @@ export default function App() {
     : allCarsList.filter(car => car.category === activeCategory);
 
   const catalogCars = useMemo(() => {
-    return allCarsList.filter(car => {
+    const filtered = allCarsList.filter(car => {
       const matchSearch = car.name.toLowerCase().includes(searchQuery.toLowerCase());
       const matchBrand = selectedBrand === 'all' || car.name.split(' ')[0] === selectedBrand;
       return matchSearch && matchBrand;
     });
-  }, [searchQuery, selectedBrand]);
+
+    return filtered.sort((a, b) => {
+      const priceA = parseInt(a.price);
+      const priceB = parseInt(b.price);
+      return sortOrder === 'asc' ? priceA - priceB : priceB - priceA;
+    });
+  }, [searchQuery, selectedBrand, sortOrder]);
 
   const brands = useMemo(() => {
     return Array.from(new Set(allCarsList.map(c => c.name.split(' ')[0])));
@@ -214,38 +221,40 @@ export default function App() {
       </section>
 
       {/* How it works Section */}
-      <section className="py-24 bg-zinc-950 text-white">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-serif text-white">{t.stepsTitle}</h2>
+      <section className="py-24 bg-zinc-950 text-white border-t border-zinc-900">
+        <div className="max-w-4xl mx-auto px-6">
+          <div className="text-center mb-12">
+            <span className="inline-block border border-amber-500/30 text-[#cbb26a] text-[10px] md:text-xs font-bold tracking-[0.15em] uppercase px-5 py-2 rounded-full mb-8">
+              {t.bookOnlineBadge}
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold text-white tracking-tight leading-[1.1] max-w-lg mx-auto">
+              {t.stepsTitle}
+            </h2>
           </div>
           
-          <div className="grid md:grid-cols-3 gap-12 relative animate-in fade-in slide-in-from-bottom duration-1000">
-            {/* connecting line for desktop */}
-            <div className="hidden md:block absolute top-8 left-[16%] right-[16%] h-[1px] bg-zinc-800"></div>
-            
-            <div className="relative text-center">
-              <div className="w-16 h-16 mx-auto bg-zinc-900 border border-zinc-800 rounded-full flex items-center justify-center text-amber-500 font-serif text-xl mb-6 relative z-10">
+          <div className="grid md:grid-cols-3 gap-0 md:gap-12 relative">
+            <div className="relative text-left py-10 border-b border-zinc-800/60 md:border-none md:py-0">
+              <div className="text-7xl font-black bg-gradient-to-b from-[#d4af37] to-[#7a5c13] bg-clip-text text-transparent mb-2 tracking-tighter">
                 {t.step1Num}
               </div>
-              <h3 className="text-xl font-medium mb-4">{t.step1Title}</h3>
-              <p className="text-zinc-400 font-light leading-relaxed">{t.step1Desc}</p>
+              <h3 className="text-2xl font-bold mb-3 tracking-tight">{t.step1Title}</h3>
+              <p className="text-zinc-400 font-light text-[15px] leading-relaxed">{t.step1Desc}</p>
             </div>
             
-            <div className="relative text-center">
-              <div className="w-16 h-16 mx-auto bg-zinc-900 border border-amber-500/50 rounded-full flex items-center justify-center text-amber-500 font-serif text-xl mb-6 relative z-10 shadow-[0_0_15px_rgba(245,158,11,0.2)]">
+            <div className="relative text-left py-10 border-b border-zinc-800/60 md:border-none md:py-0">
+              <div className="text-7xl font-black bg-gradient-to-b from-[#eed48f] to-[#997920] bg-clip-text text-transparent mb-2 tracking-tighter">
                 {t.step2Num}
               </div>
-              <h3 className="text-xl font-medium mb-4">{t.step2Title}</h3>
-              <p className="text-zinc-400 font-light leading-relaxed">{t.step2Desc}</p>
+              <h3 className="text-2xl font-bold mb-3 tracking-tight">{t.step2Title}</h3>
+              <p className="text-zinc-400 font-light text-[15px] leading-relaxed">{t.step2Desc}</p>
             </div>
             
-            <div className="relative text-center">
-              <div className="w-16 h-16 mx-auto bg-zinc-900 border border-zinc-800 rounded-full flex items-center justify-center text-amber-500 font-serif text-xl mb-6 relative z-10">
+            <div className="relative text-left pt-10 md:pt-0">
+              <div className="text-7xl font-black bg-gradient-to-b from-[#d4af37] to-[#7a5c13] bg-clip-text text-transparent mb-2 tracking-tighter">
                 {t.step3Num}
               </div>
-              <h3 className="text-xl font-medium mb-4">{t.step3Title}</h3>
-              <p className="text-zinc-400 font-light leading-relaxed">{t.step3Desc}</p>
+              <h3 className="text-2xl font-bold mb-3 tracking-tight">{t.step3Title}</h3>
+              <p className="text-zinc-400 font-light text-[15px] leading-relaxed">{t.step3Desc}</p>
             </div>
           </div>
         </div>
@@ -425,84 +434,149 @@ export default function App() {
       </section>
         </>
       ) : (
-        <div className="pt-32 pb-24 min-h-screen relative z-10 bg-zinc-950 text-white">
-          <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-16">
-              <h1 className="text-4xl md:text-6xl font-serif mb-6">{t.ourCatalog}</h1>
-              <p className="text-zinc-400 font-light text-lg max-w-2xl mx-auto">{t.allCarsDesc}</p>
-            </div>
-
-            <div className="flex flex-col md:flex-row gap-6 mb-12 items-center justify-between bg-zinc-900/50 p-6 rounded-2xl border border-zinc-800">
-              <div className="w-full md:w-1/2 relative">
-                <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500" />
-                <input 
-                  type="text" 
-                  placeholder={t.searchCar}
-                  value={searchQuery}
-                  onChange={e => setSearchQuery(e.target.value)}
-                  className="w-full bg-zinc-950/50 border border-zinc-800 rounded-xl pl-12 pr-4 py-3 focus:outline-none focus:border-amber-500 transition-colors"
-                />
+        <div className="pt-32 pb-24 min-h-screen relative z-10 bg-[#161614] text-white">
+          <div className="max-w-6xl mx-auto px-4 md:px-6">
+            
+            {/* Header and filters */}
+            <div className="max-w-3xl mx-auto">
+              {/* Header */}
+              <div className="bg-[#1f1e1a]/80 border border-zinc-800 rounded-3xl p-6 md:p-8 mb-8 text-left md:text-center text-white">
+                <div className="flex items-center justify-start md:justify-center mb-4">
+                  <span className="flex items-center gap-2 border border-[#cbb26a]/30 text-[#cbb26a] text-[10px] md:text-xs font-bold tracking-[0.15em] uppercase px-4 py-2 rounded-full">
+                    <Sparkles className="w-3.5 h-3.5" />
+                    {t.collectionBadge}
+                  </span>
+                </div>
+                <h1 className="text-4xl md:text-5xl font-bold tracking-tight mb-3">{t.ourCatalog}</h1>
+                <p className="text-zinc-400 text-sm md:text-base font-medium max-w-xl mx-auto">
+                  {t.catalogSubtitleText.replace('{count}', allCarsList.length.toString())}
+                </p>
               </div>
 
-              <div className="w-full md:w-auto flex items-center gap-2 overflow-x-auto pb-2 md:pb-0 scrollbar-hide">
-                <button
-                  onClick={() => setSelectedBrand('all')}
-                  className={`shrink-0 px-6 py-2 rounded-full border text-sm tracking-widest uppercase transition-all duration-300 ${
-                    selectedBrand === 'all'
-                      ? 'border-transparent bg-gold-gradient text-zinc-950 font-semibold'
-                      : 'border-zinc-800 text-zinc-400 hover:border-amber-500 hover:text-amber-500'
-                  }`}
-                >
-                  {t.allBrands}
-                </button>
-                {brands.map(brand => (
+              {/* Filters */}
+              <div className="flex flex-col gap-4 mb-12">
+                <div className="bg-[#181816]/90 border border-[#2a2a26] rounded-2xl p-4 flex gap-3 overflow-x-auto scrollbar-hide">
                   <button
-                    key={brand}
-                    onClick={() => setSelectedBrand(brand)}
-                    className={`shrink-0 px-6 py-2 rounded-full border text-sm tracking-widest uppercase transition-all duration-300 ${
-                      selectedBrand === brand
-                        ? 'border-transparent bg-gold-gradient text-zinc-950 font-semibold'
-                        : 'border-zinc-800 text-zinc-400 hover:border-amber-500 hover:text-amber-500'
+                    onClick={() => setSelectedBrand('all')}
+                    className={`shrink-0 px-6 py-2.5 rounded-full text-[11px] md:text-xs font-bold tracking-[0.1em] uppercase transition-all duration-300 ${
+                      selectedBrand === 'all'
+                        ? 'bg-[#d4af37] text-black'
+                        : 'border border-[#2a2a26] text-zinc-400 hover:border-[#cbb26a] hover:text-[#cbb26a]'
                     }`}
                   >
-                    {brand}
+                    {t.allBrands}
                   </button>
-                ))}
+                  {brands.map(brand => (
+                    <button
+                      key={brand}
+                      onClick={() => setSelectedBrand(brand)}
+                      className={`shrink-0 px-6 py-2.5 rounded-full text-[11px] md:text-xs font-bold tracking-[0.1em] uppercase transition-all duration-300 ${
+                        selectedBrand === brand
+                          ? 'bg-[#d4af37] text-black'
+                          : 'border border-[#2a2a26] text-zinc-400 hover:border-[#cbb26a] hover:text-[#cbb26a]'
+                      }`}
+                    >
+                      {brand}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="flex flex-col md:flex-row gap-4">
+                  <div className="relative flex-1">
+                    <Search className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500" />
+                    <input 
+                      type="text" 
+                      placeholder={t.searchCar}
+                      value={searchQuery}
+                      onChange={e => setSearchQuery(e.target.value)}
+                      className="w-full bg-[#1c1c1a]/90 border border-[#2a2a26] rounded-xl pl-12 pr-4 py-4 focus:outline-none focus:border-[#d4af37] transition-colors placeholder:text-zinc-500 text-sm font-medium"
+                    />
+                  </div>
+
+                  <div className="relative md:w-64">
+                    <ArrowUpDown className="w-4 h-4 absolute left-4 top-1/2 -translate-y-1/2 text-zinc-500" />
+                    <select 
+                      value={sortOrder}
+                      onChange={e => setSortOrder(e.target.value as 'asc' | 'desc')}
+                      className="w-full appearance-none bg-[#1c1c1a]/90 border border-[#2a2a26] rounded-xl pl-12 pr-12 py-4 text-xs font-bold tracking-[0.1em] uppercase text-zinc-300 focus:outline-none focus:border-[#d4af37] transition-colors"
+                    >
+                      <option value="asc">{t.priceAscending}</option>
+                      <option value="desc">{t.priceDescending}</option>
+                    </select>
+                  </div>
+                </div>
               </div>
             </div>
 
+            {/* Cars Grid */}
             {catalogCars.length > 0 ? (
-              <motion.div layout className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+              <motion.div layout className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                 <AnimatePresence>
                   {catalogCars.map(car => (
                     <motion.div 
                       layout
-                      initial={{ opacity: 0, scale: 0.9 }}
-                      animate={{ opacity: 1, scale: 1 }}
-                      exit={{ opacity: 0, scale: 0.9 }}
-                      transition={{ duration: 0.3 }}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, scale: 0.95 }}
+                      transition={{ duration: 0.4 }}
                       key={car.name} 
-                      className="group relative overflow-hidden bg-zinc-900 aspect-[4/5] sm:aspect-[4/3] rounded-xl cursor-pointer border border-zinc-800 hover:border-amber-500/50 transition-colors"
+                      className="group bg-[#181816] border border-[#2a2a26] rounded-3xl overflow-hidden flex flex-col relative"
                     >
-                      <img 
-                        src={car.image} 
-                        alt={car.name} 
-                        className="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
-                      />
-                      <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent opacity-90" />
-                      <div className="absolute bottom-0 inset-x-0 p-6 flex flex-col items-start transition-transform duration-500">
-                        <h3 className="text-xl font-serif mb-2">{car.name}</h3>
-                        <div className="flex justify-between w-full items-center">
-                          <p className="text-zinc-300 font-light flex items-center gap-1">
-                            <span className="text-xs">{t.pricePrefix}</span>
-                            <span className="text-amber-500 text-lg font-medium">{car.price}</span>
-                            <span className="text-xs">{t.priceSuffix}</span>
-                          </p>
+                      {/* Badges */}
+                      <div className="absolute top-4 left-4 z-10 flex gap-2">
+                        <span className="bg-black/80 backdrop-blur-md border border-[#cbb26a]/30 text-[#cbb26a] text-[9px] md:text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full">
+                          {car.category === 'economy' ? t.economyBadge : (car.category === 'premium' ? t.premiumBadge : t.standardBadge)}
+                        </span>
+                        <span className="bg-black/80 backdrop-blur-md border border-zinc-700 text-white flex items-center gap-1.5 text-[9px] md:text-[10px] font-bold px-3 py-1.5 rounded-full">
+                          <Car className="w-3 h-3" />
+                          2/3 {t.availability}
+                        </span>
+                      </div>
+
+                      {/* Image Section */}
+                      <div className="w-full bg-[#111110] relative pt-16 pb-8 px-6 flex items-center justify-center min-h-[260px] md:min-h-[300px]">
+                        <img 
+                          src={car.image} 
+                          alt={car.name} 
+                          className="w-full max-w-[400px] h-auto object-contain drop-shadow-2xl group-hover:scale-105 transition-transform duration-700 ease-out"
+                        />
+                      </div>
+
+                      {/* Content Section */}
+                      <div className="p-6 md:p-8 flex-1 flex flex-col justify-between border-t border-[#2a2a26]">
+                        <div>
+                          <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">{car.name}</h3>
+                          
+                          <div className="flex gap-5 text-zinc-400 mb-6">
+                            <div className="flex items-center gap-2 text-xs font-medium">
+                              <Users className="w-4 h-4 text-zinc-500" />
+                              <span>5 {t.places}</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-xs font-medium">
+                              <Fuel className="w-4 h-4 text-zinc-500" />
+                              <span>{t.fuel}</span>
+                            </div>
+                            <div className="flex items-center gap-2 text-xs font-medium">
+                              <Settings2 className="w-4 h-4 text-zinc-500" />
+                              <span>{t.transmission}</span>
+                            </div>
+                          </div>
+                        </div>
+                        
+                        <div className="flex items-end justify-between mt-4">
+                          <div>
+                            <div className="flex items-baseline gap-1.5 border-b border-zinc-800 pb-1 mb-1">
+                              <span className="text-3xl font-bold text-[#d4af37] leading-none">{car.price} {t.currency}</span>
+                              <span className="text-xs text-zinc-500 font-medium">/jour</span>
+                            </div>
+                            <div className="text-[11px] text-zinc-500 font-medium">{t.minDays}</div>
+                          </div>
+                          
                           <button 
                             onClick={() => { setSelectedCar(car); setFromDate(''); setToDate(''); }}
-                            className="text-xs tracking-widest uppercase bg-gold-gradient border-none text-zinc-950 px-4 py-2 hover:bg-gold-gradient-light transition-colors font-semibold cursor-pointer rounded"
+                            className="text-sm font-bold text-white flex items-center gap-2 hover:text-[#d4af37] transition-colors"
                           >
-                            {t.bookNow}
+                            {t.seeOptions}
                           </button>
                         </div>
                       </div>
@@ -511,9 +585,9 @@ export default function App() {
                 </AnimatePresence>
               </motion.div>
             ) : (
-              <div className="text-center py-20 text-zinc-500">
+              <div className="text-center py-20 bg-[#181816] border border-[#2a2a26] rounded-3xl">
                 <Car className="w-16 h-16 mx-auto mb-4 opacity-50" />
-                <p className="text-xl">{t.noCarsFound}</p>
+                <p className="text-xl font-medium">{t.noCarsFound}</p>
               </div>
             )}
           </div>
