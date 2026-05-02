@@ -46,17 +46,22 @@ export default function App() {
 
   const defaultCarImage = "https://images.unsplash.com/photo-1606664824334-fcba8f19dafe?auto=format&fit=crop&q=80&w=800";
   const allCarsList = [
-    { name: "VW Touareg", price: "900", category: "premium", image: "/touareg-v.webp" },
-    { name: "Mercedes E 220", price: "800", category: "premium", image: "/E-220.webp" },
-    { name: "Range Rover Sport", price: "1200", category: "premium", image: "/range-rover-sport.webp" },
-    { name: t.car4Name, price: "1100", category: "premium", image: defaultCarImage },
-    { name: "Porsche 911 GT3", price: "1800", category: "premium", image: defaultCarImage },
-    { name: "Audi RS Q8", price: "950", category: "standard", image: defaultCarImage },
-    { name: "BMW 4 Series Gran Coupe", price: "350", category: "standard", image: defaultCarImage },
-    { name: "VW Golf R", price: "250", category: "compact", image: defaultCarImage },
-    { name: "Renault Clio", price: "80", category: "economy", image: defaultCarImage },
-    { name: "Peugeot 208", price: "85", category: "economy", image: defaultCarImage },
-    { name: "Mercedes A-Class", price: "180", category: "compact", image: defaultCarImage },
+    { name: "VW Touareg Extreme", price: "900", category: "premium", image: "/vw-touareg-extreme.png" },
+    { name: "Mercedes Classe E", price: "800", category: "premium", image: "/mercedesE.png" },
+    { name: "Mercedes Classe V", price: "1200", category: "premium", image: "/MercedesclasseV.png" },
+    { name: "Golf 8 R", price: "900", category: "premium", image: "/golf8r.png" },
+    { name: "Cupra Formentor", price: "800", category: "premium", image: "/cupra-formentor.png" },
+    { name: "Kia Sportage", price: "700", category: "standard", image: "/2026-Kia-Sportage.png" },
+    { name: "Hyundai Tucson", price: "600", category: "standard", image: "/hyundaiucson.png" },
+    { name: "Audi A3", price: "1000", category: "standard", image: "/audi-a3.png" },
+    { name: "VW T-Roc", price: "700", category: "standard", image: "/troc.png" },
+    { name: "VW Golf 8", price: "800", category: "compact", image: "/golf8.png" },
+    { name: "Mercedes Classe A", price: "1000", category: "compact", image: "/mercedesclassA.png" },
+    { name: "Mercedes Classe A Black", price: "1000", category: "compact", image: "/mercedesclassAblack.png" },
+    { name: "Seat Ibiza", price: "350", category: "economy", image: "/seat-ibiza.png" },
+    { name: "Hyundai Accent", price: "350", category: "economy", image: "/Hyundai-Accent.webp" },
+    { name: "Renault Clio 5", price: "400", category: "economy", image: "/clio5.png" },
+    { name: "Dacia Logan", price: "250", category: "economy", image: "/dacia-logan.png" },
   ];
 
   const categories = [
@@ -526,10 +531,6 @@ export default function App() {
                       <div className="absolute top-4 left-4 z-10 flex gap-2">
                         <span className="bg-black/80 backdrop-blur-md border border-[#cbb26a]/30 text-[#cbb26a] text-[9px] md:text-[10px] font-bold tracking-widest uppercase px-3 py-1.5 rounded-full">
                           {car.category === 'economy' ? t.economyBadge : (car.category === 'premium' ? t.premiumBadge : t.standardBadge)}
-                        </span>
-                        <span className="bg-black/80 backdrop-blur-md border border-zinc-700 text-white flex items-center gap-1.5 text-[9px] md:text-[10px] font-bold px-3 py-1.5 rounded-full">
-                          <Car className="w-3 h-3" />
-                          2/3 {t.availability}
                         </span>
                       </div>
 
