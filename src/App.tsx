@@ -308,17 +308,17 @@ export default function App() {
                     className="w-full h-full object-cover opacity-70 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-zinc-950 via-zinc-950/40 to-transparent opacity-90" />
-                  <div className="absolute bottom-0 inset-x-0 p-8 flex flex-col items-start transition-transform duration-500">
-                    <h3 className="text-xl font-serif mb-2">{car.name}</h3>
-                    <div className="flex justify-between w-full items-center">
+                  <div className="absolute bottom-0 inset-x-0 p-6 sm:p-8 flex flex-col items-start transition-transform duration-500">
+                    <h3 className="text-lg sm:text-xl font-serif mb-2">{car.name}</h3>
+                    <div className="flex flex-col sm:flex-row justify-between w-full items-start sm:items-center gap-4">
                       <p className="text-zinc-300 font-light flex items-center gap-1">
-                        <span className="text-xs">{t.pricePrefix}</span>
-                        <span className="text-amber-500 text-lg">{car.price}</span>
-                        <span className="text-xs">{t.priceSuffix}</span>
+                        <span className="text-[10px] sm:text-xs">{t.pricePrefix}</span>
+                        <span className="text-amber-500 text-base sm:text-lg font-bold">{car.price}</span>
+                        <span className="text-[10px] sm:text-xs">{t.priceSuffix}</span>
                       </p>
                       <button 
                         onClick={() => { setSelectedCar(car); setFromDate(''); setToDate(''); }}
-                        className="text-xs tracking-widest uppercase bg-gold-gradient border-none text-zinc-950 px-4 py-2 hover:bg-gold-gradient-light transition-colors font-semibold cursor-pointer"
+                        className="text-[10px] sm:text-xs tracking-widest uppercase bg-gold-gradient border-none text-zinc-950 px-4 py-2 hover:bg-gold-gradient-light transition-colors font-semibold cursor-pointer w-full sm:w-auto text-center"
                       >
                         {t.bookNow}
                       </button>
@@ -544,22 +544,22 @@ export default function App() {
                       </div>
 
                       {/* Content Section */}
-                      <div className="p-6 md:p-8 flex-1 flex flex-col justify-between border-t border-[#2a2a26]">
-                        <div>
-                          <h3 className="text-2xl font-bold text-white mb-4 tracking-tight">{car.name}</h3>
+                      <div className="p-5 md:p-8 flex-1 flex flex-col justify-between border-t border-[#2a2a26]">
+                        <div className="mb-4">
+                          <h3 className="text-xl md:text-2xl font-bold text-white tracking-tight leading-tight">{car.name}</h3>
                         </div>
                         
-                        <div className="flex items-end justify-between mt-4">
-                          <div>
-                            <div className="flex items-baseline gap-1.5 border-b border-zinc-800 pb-1 mb-1">
-                              <span className="text-3xl font-bold text-[#d4af37] leading-none">{car.price} {t.currency}</span>
-                              <span className="text-xs text-zinc-500 font-medium">/jour</span>
+                        <div className="flex flex-col sm:flex-row items-start sm:items-end justify-between gap-4 mt-auto">
+                          <div className="w-full sm:w-auto">
+                            <div className="flex items-baseline gap-1.5 border-b border-zinc-800 pb-1 mb-1 w-fit">
+                              <span className="text-2xl md:text-3xl font-bold text-[#d4af37] leading-none whitespace-nowrap">{car.price} {t.currency}</span>
+                              <span className="text-[10px] md:text-xs text-zinc-500 font-medium">/jour</span>
                             </div>
                           </div>
                           
                           <button 
                             onClick={() => { setSelectedCar(car); setFromDate(''); setToDate(''); }}
-                            className="text-xs tracking-widest uppercase bg-gold-gradient border-none text-zinc-950 px-4 py-2 hover:bg-gold-gradient-light transition-colors font-semibold cursor-pointer rounded"
+                            className="w-full sm:w-auto text-[10px] md:text-xs tracking-widest uppercase bg-gold-gradient border-none text-zinc-950 px-6 py-3 hover:bg-gold-gradient-light transition-colors font-bold cursor-pointer rounded-lg shadow-lg shadow-amber-500/10"
                           >
                             {t.bookNow}
                           </button>
@@ -633,12 +633,14 @@ export default function App() {
               
               <div className="p-6">
                 <h3 className="text-2xl font-serif mb-2">{selectedCar.name}</h3>
-                <p className="text-amber-500 font-medium mb-6 flex items-center justify-between">
-                  <span>{t.pricePrefix} {selectedCar.price} {t.priceSuffix}</span>
-                  <span className="text-sm text-zinc-400 bg-zinc-900 px-3 py-1 rounded-full text-center">
+                <div className="mb-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+                  <p className="text-amber-500 font-bold text-lg">
+                    {t.pricePrefix} {selectedCar.price} {t.priceSuffix}
+                  </p>
+                  <span className="text-xs text-zinc-400 bg-zinc-950 border border-zinc-800 px-3 py-1.5 rounded-full text-center whitespace-nowrap">
                     {computedDays > 0 ? `${computedDays} jour(s)` : 'Sélectionnez les dates'}
                   </span>
-                </p>
+                </div>
                 
                 <div className="mb-6 grid grid-cols-2 gap-4">
                   <div>
